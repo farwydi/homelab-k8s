@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: buildkite
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: buildkite
+  source:
+    repoURL: 'https://github.com/farwydi/homelab-k8s'
+    targetRevision: HEAD
+    path: buildkite
+    helm:
+      releaseName: buildkite-agent
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: buildkite
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=false

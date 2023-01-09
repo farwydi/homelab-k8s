@@ -1,0 +1,14 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: do-registry
+  labels:
+    {{- include "buildkite.labels" . | nindent 4 }}
+spec:
+  encryptedData:
+    config.json: AgB9E68l2U+a7DY9Enjt/Ie6i4n5GYnmqBDVDsd3y4N4KVVQN+IwM5GO6sDT6aHbSXOQwH4ynUyULYeDR368oqvF25HL/cMh0+KqvGO5Yg5C86sQ6mEZPPsxGPI6vRHsDpr5Uu25AxwWSOSp82zcHpsuHP6P3HO+Y3HgYlNcbATqQX18WsRmFoHf+z2XQ1+GtZ+Ucc38J9PrbZ7voABTEaG1nOG8JosiKUx5c5uBiZeXW6dJy3JLscYuQ7wrTEPj7RaqqarsIxkXVZq1vGIqggX16XkgEjYfoSurwK51c995HkxgsPJyuz3s0ukxMilsjiUQKmiTAt+r5JRihO4tPk8Tm6b1gmV615k+8IF7C9zQw8CDt9OjTD5h963+SeBf8bMhJgaK1r9AmoXJmRwOj+r80J9Q8rD/YiRhdu7sex4/Q5TjreGszX1+Pj26E0gfY8V8ByLFmz3XD2Czen+hz80lxL05T1RqdqKBhFt1iKYdiHZuy5qDoa1j/IbKRjBJKQAcC7OKs7t/giNbNeO9s8aUzTumH50RNxJnK5jzgMETiOWJPW+5DMVrF5Fm7Y255mjShmBXjae+9W2m+RRIuDN7odOdHJkpLeIqKTu2uiMZfQRQ8HVaQ+zaVQ1Ok+o+ZzLot86Z/z5amAGNAN5tCdodQmnEVp91bTjuOedBnPX5r5G3+KPwjgsfMnCHYhMvykUDNwPRrprJquEPEUxQKu9B/BrOHklnlxjgaKVzj32ydvpRYcKbslZyqpbxIvfoloakpIDpxIb/xtmPyYjT2qdWpE55lq8L1jTTgGzlVbNjGKNF7otHVV0W+3ppP+V3RhyvReBsp7mBIq0YuHRY3k1jt5GHU8kSm+nhlgR8DGVJEjQxqYw622TSpcnh7fQTKu7pWBJ3TiFDHq9zv/e7G5fpkW8/u7xY0eo+2D1CAIaLUGYBAroHOhTPZlyVcfsRgrIOhCCdMp8MYbEgQ0+PuQRg37HOeff4LM6O6cqeH2NNkIjhTK6NJL7QOD2F65TR1lX+RO0=
+  template:
+    metadata:
+      name: do-registry
+      labels:
+        {{- include "buildkite.labels" . | nindent 8 }}

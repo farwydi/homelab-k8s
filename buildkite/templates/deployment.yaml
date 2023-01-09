@@ -1,0 +1,121 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "buildkite.fullname" . }}
+  labels:
+    {{- include "buildkite.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "buildkite.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "buildkite.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "buildkite.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+        - name: setup
+          image: busybox
+          command:
+            - "/bin/sh"
+            - "-c"
+            - "wget https://github.com/earthly/earthly/releases/latest/download/earthly-linux-amd64 -O /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly"
+          volumeMounts:
+            - name: deps
+              mountPath: "/usr/local/bin"
+      containers:
+        - name: agent
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: BUILDKITE_AGENT_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: BUILDKITE_AGENT_CONFIG
+              value: "/buildkite/config/buildkite-agent.cfg"
+            - name: BUILDKITE_AGENT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: buildkite-agent-token
+                  key: token
+                  optional: false
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: docker-sock
+              mountPath: /var/run
+            - name: deps
+              mountPath: "/usr/local/bin/earthly"
+              subPath: earthly
+            - name: builds
+              mountPath: "/buildkite/builds"
+            - name: config
+              mountPath: "/buildkite/config"
+              readOnly: true
+            - name: hooks
+              mountPath: "/buildkite/hooks"
+              readOnly: true
+            - name: secrets
+              mountPath: "/buildkite/secrets"
+              readOnly: true
+            - name: do-registry
+              mountPath: "/root/.docker"
+              readOnly: true
+      terminationGracePeriodSeconds: 900
+      volumes:
+        - name: docker-sock
+          hostPath:
+            path: /var/run
+        - name: deps
+          emptyDir: {}
+        - name: builds
+          emptyDir: {}
+        - name: config
+          configMap:
+            name: agent-config
+            items:
+              - key: "buildkite-agent.cfg"
+                path: "buildkite-agent.cfg"
+        - name: hooks
+          configMap:
+            name: agent-hooks
+            items:
+              - key: "environment"
+                path: "environment"
+        - name: secrets
+          secret:
+            secretName: buildkite-secrets
+            defaultMode: 0600
+            optional: true
+        - name: do-registry
+          secret:
+            secretName: do-registry
+            defaultMode: 0600
+            optional: true
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

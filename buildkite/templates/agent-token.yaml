@@ -1,0 +1,14 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: buildkite-agent-token
+  labels:
+    {{- include "buildkite.labels" . | nindent 4 }}
+spec:
+  encryptedData:
+    token: AgDoSjbHOwzxY0n0QA6n8BINxv/t0ZltN9ce2UpYKKdQ1xSrNic5WwRW9i7jtLKSQ0fhhn6wXIpokQzO/tArMoc2H87Bfon6SOdM/4jDumyGZVFkUs0SzRycAnoPghnRHxyrMnuUVhrV3ea7eOFYphzk+aUZGk4rasn43xl37/7byRhtB+N+ixY+BFY3RYEVqUsgb+i1mNMrY7jbNqjub8e4Edq0an5xME3nEH6lJ8jaSgeBSUDiBro7/Cy1X0IkafIfK0CcfBJ2BW0DBnbDvgpHnvHeVoHFcMa133m8VfWJeoiAMcDdt66XXxwIm6f5cWYKjbWo3bLNLlS/r80Zu9rp3TYKjnvFtcGk2A56HBpALCtyfNMISknbbuFRVFO/3EOz6zAQeMLEjxlx58CkhpNa3kGaUL2bIEvx5C4TMLG3c21L2ZkUSl4zP9UyN7PKr+DdNfs48qVMhsqXx3CQEWAc7jS7Gi0v0dm94x7BuxnckOpln11uE2iKsuzMwASy4vH5m/Kp+JKgMn+e8rhyN8OUEMzL1fZZwq4g9pCTgj8YGRnfGqy6BkyszeQ599hQpMCSLcWoSLY7VnEDtWjaTgNWhY9iNitDZNy1ZL9SuohBgaQSfxoFy/f6j+goRYrlKMGkeL/kC56vG6buyEICJBlWYK1/0QXOJmp3EJ8E/8SezNri6eFKdimhZhg5cL7I7ipjv+FGBaE6Km6PBtLrnjcXYN37KOqAawOUiQLEj+Rdg0BFSFPoJwI9pjewg/sXTzs0lg==
+  template:
+    metadata:
+      name: buildkite-agent-token
+      labels:
+        {{- include "buildkite.labels" . | nindent 8 }}
