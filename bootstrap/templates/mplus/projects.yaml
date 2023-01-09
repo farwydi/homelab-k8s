@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: mplus
+  namespace: argocd
+spec:
+  sourceRepos:
+    - 'https://github.com/farwydi/homelab-k8s'
+  destinations:
+    - namespace: 'mplus'
+      server: 'https://kubernetes.default.svc'
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'

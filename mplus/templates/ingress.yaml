@@ -1,0 +1,26 @@
+{{- if .Values.ingress.enabled -}}
+{{- $fullName := include "mplus.fullname" . -}}
+{{- $svcPort := .Values.service.port -}}
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "mplus.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    {{- range .Values.ingress.routes }}
+    - kind: Rule
+      match: {{ .match | quote }}
+      services:
+        - kind: Service
+          name: {{ $fullName }}
+          port: {{ $svcPort }}
+    {{- end }}
+{{- end }}

@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mplus
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "300"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: mplus
+  source:
+    repoURL: 'https://github.com/farwydi/homelab-k8s'
+    targetRevision: HEAD
+    path: mplus
+    helm:
+      releaseName: mplus-site
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: mplus
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=false
