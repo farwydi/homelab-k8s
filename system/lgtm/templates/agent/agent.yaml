@@ -1,0 +1,26 @@
+apiVersion: monitoring.grafana.com/v1alpha1
+kind: GrafanaAgent
+metadata:
+  name: grafana-agent
+  namespace: lgtm
+  labels:
+    app: grafana-agent
+spec:
+  image: grafana/agent:v0.30.2
+  logLevel: info
+  serviceAccountName: grafana-agent
+  integrations:
+    selector:
+      matchLabels:
+        agent: grafana-agent
+  metrics:
+    externalLabels:
+      cluster: homelab
+    scrapeInterval: 60s
+    instanceSelector:
+      matchLabels:
+        agent: grafana-agent-metrics
+  logs:
+    instanceSelector:
+      matchLabels:
+        agent: grafana-agent-logs

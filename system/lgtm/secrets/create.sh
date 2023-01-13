@@ -1,2 +1,2 @@
-kubeseal --format yaml > ../templates/grafana-cloud-logs.yaml < grafana-cloud-logs.yaml
-kubeseal --format yaml > ../templates/grafana-cloud-metrics.yaml < grafana-cloud-metrics.yaml
+kubeseal --format yaml > ../templates/logs/secrets.yaml < grafana-cloud-logs.yaml
+kubeseal --format yaml > ../templates/metrics/secrets.yaml < grafana-cloud-metrics.yaml

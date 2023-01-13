@@ -8,6 +8,8 @@ metadata:
 spec:
   clients:
     - url: https://logs-prod-eu-west-0.grafana.net/loki/api/v1/push
+      externalLabels:
+        cluster: homelab
       basicAuth:
         username:
           name: primary-credentials-logs

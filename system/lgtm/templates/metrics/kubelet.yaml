@@ -1,0 +1,28 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    instance: primary
+  name: kubelet-monitor
+  namespace: lgtm
+spec:
+  jobLabel: integrations/kubernetes/kubelet
+  endpoints:
+    - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+      honorLabels: true
+      interval: 60s
+      path: /metrics
+      port: https-metrics
+      relabelings:
+        - sourceLabels:
+            - __metrics_path__
+          targetLabel: metrics_path
+      scheme: https
+      tlsConfig:
+        insecureSkipVerify: true
+  namespaceSelector:
+    matchNames:
+      - lgtm
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kubelet

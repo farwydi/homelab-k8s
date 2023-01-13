@@ -1,3 +1,16 @@
+grafana-agent-operator:
+  kubeletService:
+    namespace: lgtm
+    serviceName: kubelet
+kube-state-metrics:
+  prometheus:
+    monitor:
+      enabled: true
+      interval: 60s
+      honorLabels: true
+      additionalLabels:
+        instance: primary
+      jobLabel: integrations/kubernetes/kube-state-metrics
 prometheus-node-exporter:
   prometheus:
     monitor:
