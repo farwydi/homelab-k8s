@@ -1,0 +1,26 @@
+traefik:
+  globalArguments: []
+  tlsStore:
+    default:
+      defaultCertificate:
+        secretName: cloudflare-client-tls
+  ingressRoute:
+    dashboard:
+      entryPoints:
+        - websecure
+      matchRule: Host(`traefik.farwydi.dev`)
+  logs:
+    general:
+      level: DEBUG
+  ports:
+    web:
+      expose: false
+    websecure:
+      http3:
+        enabled: true
+  additionalArguments:
+    - "--serversTransport.rootCAs=/certs/cloudflare-origin-ca-ecc-root.crt"
+  volumes:
+    - name: cloudflare-origin-ca-ecc-root-cert
+      mountPath: "/certs"
+      type: secret

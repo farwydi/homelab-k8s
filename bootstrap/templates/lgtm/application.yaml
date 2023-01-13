@@ -10,11 +10,11 @@ metadata:
 spec:
   project: lgtm
   source:
-    repoURL: 'https://grafana.github.io/helm-charts'
-    targetRevision: 0.2.8
-    chart: grafana-agent-operator
+    repoURL: 'https://github.com/farwydi/homelab-k8s'
+    targetRevision: HEAD
+    path: system/lgtm
     helm:
-      releaseName: grafana-agent-operator
+      releaseName: lgtm
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: lgtm

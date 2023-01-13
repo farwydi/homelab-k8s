@@ -1,23 +1,23 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: buildkite
+  name: mplus
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-wave: "300"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: buildkite
+  project: mplus
   source:
     repoURL: 'https://github.com/farwydi/homelab-k8s'
     targetRevision: HEAD
-    path: system/buildkite
+    path: apps/mplus
     helm:
-      releaseName: buildkite
+      releaseName: mplus
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: buildkite
+    namespace: mplus
   syncPolicy:
     automated: {}
     syncOptions:

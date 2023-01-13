@@ -5,6 +5,7 @@ metadata:
   namespace: argocd
 spec:
   sourceRepos:
+    - 'https://github.com/farwydi/homelab-k8s'
     - 'https://kubernetes-sigs.github.io/metrics-server/'
   destinations:
     - namespace: 'kube-system'

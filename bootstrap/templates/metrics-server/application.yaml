@@ -10,9 +10,9 @@ metadata:
 spec:
   project: metrics-server
   source:
-    repoURL: 'https://kubernetes-sigs.github.io/metrics-server/'
-    targetRevision: 3.8.2
-    chart: metrics-server
+    repoURL: 'https://github.com/farwydi/homelab-k8s'
+    targetRevision: HEAD
+    path: system/metrics-server
     helm:
       releaseName: metrics-server
   destination:

@@ -5,6 +5,7 @@ metadata:
   namespace: argocd
 spec:
   sourceRepos:
+    - 'https://github.com/farwydi/homelab-k8s'
     - 'https://helm.traefik.io/traefik'
   destinations:
     - namespace: 'traefik'

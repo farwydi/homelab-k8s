@@ -1,23 +1,23 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: mplus
+  name: workload
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "300"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: mplus
+  project: default
   source:
     repoURL: 'https://github.com/farwydi/homelab-k8s'
     targetRevision: HEAD
-    path: mplus
+    path: workload
     helm:
-      releaseName: mplus-site
+      releaseName: workload
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: mplus
+    namespace: argocd
   syncPolicy:
     automated: {}
     syncOptions:

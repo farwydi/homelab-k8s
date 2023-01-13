@@ -10,37 +10,11 @@ metadata:
 spec:
   project: traefik
   source:
-    repoURL: 'https://helm.traefik.io/traefik'
-    targetRevision: 20.8.0
-    chart: traefik
+    repoURL: 'https://github.com/farwydi/homelab-k8s'
+    targetRevision: HEAD
+    path: system/traefik
     helm:
       releaseName: traefik
-      values: |
-        globalArguments: []
-        tlsStore:
-          default:
-            defaultCertificate:
-              secretName: cloudflare-client-tls
-        ingressRoute:
-          dashboard:
-            entryPoints:
-              - websecure
-            matchRule: Host(`traefik.farwydi.dev`)
-        logs:
-          general:
-            level: DEBUG
-        ports:
-          web:
-            expose: false
-          websecure:
-            http3:
-              enabled: true
-        additionalArguments:
-          - "--serversTransport.rootCAs=/certs/cloudflare-origin-ca-ecc-root.crt"
-        volumes:
-          - name: cloudflare-origin-ca-ecc-root-cert
-            mountPath: "/certs"
-            type: secret
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: traefik
