@@ -8,6 +8,17 @@ metadata:
 spec:
   pipelineStages:
     - docker: {}
-  namespaceSelector: {}
+  namespaceSelector:
+    matchNames:
+      - argocd
+      - buildkite
+      - default
+      - kube-node-lease
+      - kube-public
+      - kube-system
+      - lgtm
+      - metrics-server
+      - mplus
+      - traefik
   selector:
     matchLabels: {}
