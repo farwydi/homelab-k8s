@@ -8,3 +8,6 @@ kubectl create secret generic cloudflare-origin-ca-ecc-root-cert \
   --from-file=cloudflare-origin-ca-ecc-root.crt \
   -n traefik \
   --dry-run=client -o=yaml > ../templates/cloudflare-origin-ca-ecc-root-cert.yaml
+
+kubeseal --format yaml > ../templates/lgtm/grafana-cloud-logs.yaml < grafana-cloud-logs.yaml
+kubeseal --format yaml > ../templates/lgtm/grafana-cloud-metrics.yaml < grafana-cloud-metrics.yaml

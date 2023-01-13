@@ -1,0 +1,21 @@
+apiVersion: monitoring.grafana.com/v1alpha1
+kind: LogsInstance
+metadata:
+  name: primary
+  namespace: lgtm
+  labels:
+    agent: grafana-agent-logs
+spec:
+  clients:
+    - url: https://logs-prod-eu-west-0.grafana.net/loki/api/v1/push
+      basicAuth:
+        username:
+          name: primary-credentials-logs
+          key: username
+        password:
+          name: primary-credentials-logs
+          key: password
+  podLogsNamespaceSelector: {}
+  podLogsSelector:
+    matchLabels:
+      instance: primary

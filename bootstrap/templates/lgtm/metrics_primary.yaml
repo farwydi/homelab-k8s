@@ -1,0 +1,29 @@
+apiVersion: monitoring.grafana.com/v1alpha1
+kind: MetricsInstance
+metadata:
+  name: primary
+  namespace: lgtm
+  labels:
+    agent: grafana-agent-metrics
+spec:
+  remoteWrite:
+    - url: https://prometheus-prod-01-eu-west-0.grafana.net/api/prom/push
+      basicAuth:
+        username:
+          name: primary-credentials-metrics
+          key: username
+        password:
+          name: primary-credentials-metrics
+          key: password
+  serviceMonitorNamespaceSelector: {}
+  serviceMonitorSelector:
+    matchLabels:
+      instance: primary
+  podMonitorNamespaceSelector: {}
+  podMonitorSelector:
+    matchLabels:
+      instance: primary
+  probeNamespaceSelector: {}
+  probeSelector:
+    matchLabels:
+      instance: primary

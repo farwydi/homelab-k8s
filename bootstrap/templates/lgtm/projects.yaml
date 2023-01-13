@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: lgtm
+  namespace: argocd
+spec:
+  sourceRepos:
+    - 'https://grafana.github.io/helm-charts'
+  destinations:
+    - namespace: 'lgtm'
+      server: 'https://kubernetes.default.svc'
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
