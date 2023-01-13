@@ -2,5 +2,8 @@ dependencies:
 - name: grafana-agent-operator
   repository: https://grafana.github.io/helm-charts
   version: 0.2.8
-digest: sha256:d31bac4ffe06d017ede97868e19d7a7c178502fb87e09e63cccc00f1c1f3ff9a
-generated: "2023-01-13T22:27:22.144374+02:00"
+- name: prometheus-node-exporter
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 4.12.0
+digest: sha256:ffbdb1af28d37e0026fe6e283019b0f47f5585fa604e85cc6a9875f8f7f384de
+generated: "2023-01-13T23:57:52.15423+02:00"

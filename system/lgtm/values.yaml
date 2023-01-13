@@ -1,0 +1,6 @@
+prometheus-node-exporter:
+  prometheus:
+    monitor:
+      enabled: true
+      additionalLabels:
+        instance: primary
