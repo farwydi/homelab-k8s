@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: metrics-server
+  namespace: argocd
+spec:
+  sourceRepos:
+    - 'https://kubernetes-sigs.github.io/metrics-server/'
+  destinations:
+    - namespace: 'kube-system'
+      server: 'https://kubernetes.default.svc'
+    - namespace: 'metrics-server'
+      server: 'https://kubernetes.default.svc'
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
