@@ -1,0 +1,9 @@
+datadog:
+  datadog:
+    apm:
+      portEnabled: true
+    apiKeyExistingSecret: datadog-api
+    logs:
+      enabled: true
+      containerCollectAll: true
+    site: datadoghq.eu
