@@ -1,4 +1,12 @@
 traefik:
+  metrics:
+    prometheus:
+      serviceMonitor:
+        interval: 60s
+        honorLabels: true
+        additionalLabels:
+          instance: primary
+        jobLabel: integrations/traefik
   globalArguments: []
   tlsStore:
     default:
