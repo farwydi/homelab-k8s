@@ -1,4 +1,15 @@
 traefik:
+  deployment:
+    replicas: 3
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: doks.digitalocean.com/node-pool
+                operator: In
+                values:
+                  - production
   tracing:
     datadog:
       localAgentHostPort: datadog.datadog.svc.cluster.local:8126
