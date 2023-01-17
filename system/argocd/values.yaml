@@ -1,4 +1,26 @@
 argo-cd:
+  controller:
+    affinity: &affinity
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: doks.digitalocean.com/node-pool
+                  operator: In
+                  values:
+                    - maintenance
+  dex:
+    affinity: *affinity
+  redis:
+    affinity: *affinity
+  server:
+    affinity: *affinity
+  repoServer:
+    affinity: *affinity
+  applicationSet:
+    affinity: *affinity
+  notifications:
+    affinity: *affinity
   configs:
     params:
       server.insecure: true
