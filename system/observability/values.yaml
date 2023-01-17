@@ -1,0 +1,94 @@
+kube-prometheus-stack:
+  kubeControllerManager:
+    enabled: false
+  kubeEtcd:
+    enabled: false
+  kubeScheduler:
+    enabled: false
+  prometheusOperator:
+    prometheusConfigReloader:
+      resources:
+        requests:
+          cpu: 80m
+          memory: 50Mi
+        limits:
+          cpu: 80m
+          memory: 50Mi
+    affinity: &affinity
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: doks.digitalocean.com/node-pool
+                  operator: In
+                  values:
+                    - observability
+    admissionWebhooks:
+      patch:
+        affinity: *affinity
+  kube-state-metrics:
+    affinity: *affinity
+  alertmanager:
+    alertmanagerSpec:
+      affinity: *affinity
+  grafana:
+    enabled: true
+    sidecar:
+      dashboards:
+        searchNamespace: ALL
+    admin:
+      existingSecret: grafana-admin
+    serviceMonitor:
+      labels:
+        release: "observability"
+    affinity: *affinity
+  prometheus:
+    prometheusSpec:
+      storageSpec:
+        volumeClaimTemplate:
+          spec:
+            storageClassName: do-block-storage
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 10Gi
+      affinity: *affinity
+metrics-server:
+  affinity: *affinity
+loki-stack:
+  promtail:
+    enabled: true
+    config:
+      clients:
+        - url: http://observability-loki:3100/loki/api/v1/push
+    serviceMonitor:
+      enabled: true
+      labels:
+        release: "observability"
+  loki:
+    isDefault: false
+    url: http://observability-loki:3100/
+    serviceMonitor:
+      enabled: true
+    affinity: *affinity
+    persistence:
+      enabled: true
+      accessModes:
+        - ReadWriteOnce
+      size: 10Gi
+      storageClassName: do-block-storage
+jaeger:
+  allInOne:
+    enabled: true
+  provisionDataStore:
+    cassandra: false
+    elasticsearch: false
+    kafka: false
+  storage:
+    type: none
+  agent:
+    enabled: false
+  collector:
+    enabled: false
+  query:
+    enabled: false

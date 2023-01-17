@@ -1,23 +1,24 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: metrics-server
+  name: observability
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "4"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: metrics-server
+  project: observability
   source:
     repoURL: 'https://github.com/farwydi/homelab-k8s'
     targetRevision: HEAD
-    path: system/metrics-server
+    path: system/observability
     helm:
-      releaseName: metrics-server
+      releaseName: observability
+      skipCrds: true
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: metrics-server
+    namespace: observability
   syncPolicy:
     automated:
       prune: true

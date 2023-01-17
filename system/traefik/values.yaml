@@ -1,4 +1,18 @@
 traefik:
+  metrics:
+    prometheus:
+      service:
+        enabled: true
+      serviceMonitor:
+        additionalLabels:
+          release: "observability"
+        honorLabels: true
+        scrapeTimeout: 30s
+        jobLabel: traefik
+  tracing:
+    jaeger:
+      localAgentHostPort: observability-jaeger-agent.observability:6831
+      propagation: jaeger
   deployment:
     replicas: 3
   affinity:
