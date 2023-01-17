@@ -10,12 +10,6 @@ traefik:
                 operator: In
                 values:
                   - production
-  tracing:
-    datadog:
-      localAgentHostPort: datadog.datadog.svc.cluster.local:8126
-  metrics:
-    datadog:
-      address: datadog.datadog.svc.cluster.local:8125
   globalArguments: []
   tlsStore:
     default:
