@@ -39,3 +39,9 @@ traefik:
     annotations:
       kubernetes.digitalocean.com/load-balancer-id: "d6387c85-f945-409b-8eef-2ffbd1a2c9bb"
       service.beta.kubernetes.io/do-loadbalancer-name: "homelab-k8s-main-lb"
+  tlsOptions:
+    default:
+      clientAuth:
+        secretNames:
+          - cloudflare-origin-pull-ca-cert
+        clientAuthType: RequireAndVerifyClientCert
